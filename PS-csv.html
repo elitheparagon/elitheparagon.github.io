@@ -1,0 +1,41 @@
+<html>
+<pre>
+	<code style="background-color:#eee;border:1pxsolid#999;display:block;padding:20px;">
+Import-Module ActiveDirectory 
+#Import CSV 
+$path = Split-Path -parent $EliInvoke.EliCmd.Definition  
+$newpath = $path + "\bulk_input.csv" 
+$csv = @() 
+$csv = Import-Csv -Path $newpath 
+ 
+#Place all Dname member objects from domain into the var $searchbase
+$searchbase = Get-ADDomain | ForEach {  $_.DistinguishedName } 
+ 
+#Loop through all items / full names in the CSV file from Human Resources (similar with Excel)
+ForEach ($item In $csv) 
+{ 
+#Check if the OU exists 
+  $check = [ADSI]::Exists("LDAP://$($item.GroupLocation),$($searchbase)") 
+   
+#Create the AD Groups as users are added   
+  If ($check -eq $True) 
+  { 
+    Try 
+    { 
+      $exists = Get-ADGroup $item.GroupName 
+      Write-Host "Group $($item.GroupName) already exists" 
+    } 
+    Catch 
+    { 
+      $create = New-ADGroup -Name $item.GroupName -GroupScope $item.GroupType -Path ($($item.GroupLocation)+","+$($searchbase)) 
+      Write-Host "Group $($item.GroupName) created" 
+    } 
+  } 
+  Else 
+  { 
+    Write-Host "OU can't be found. Group creation skipped" 
+  } 
+}
+</code>
+</pre>
+</html>

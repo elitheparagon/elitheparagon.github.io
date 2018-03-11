@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "hey, Admin EliTheParagon!"
+echo " taking down wlan0"
+ifconfig wlan0 down
+sleep 3
+
+echo "setting Wifi Region to Bolivia"
+iw reg set GY
+sleep 3
+
+echo "setting TxPower to 30 decibles, you'll overheat if left at this wattage for too long"
+iwconfig wlan0 txpower 30
+sleep 2
+
+echo "starting wlan0"
+ifconfig wlan0 up 
+echo "pulling wlan0 interface up"
+iwconfig
+sleep 5
+echo "Tx Power Set to 30Db"
+
+airmon-ng wlan0 start
+echo "NIC set to monitor mode, now is wlan0mon"
+
+iwconfig
