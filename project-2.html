@@ -1,0 +1,17 @@
+<div id="project">
+	<section class="content">
+		<div class="block-content">
+			<div class="project-title">
+				<h2>Automatically configure and deploy a Windows Server 2012 Active Directory Domain Controller running IIS services</h2>
+				<p class="tags">Graphic / Apps</p>
+			</div>
+			<p class="project-description">This script configures and deploys a Windows Server DC to AWS as a machine instance.  In this case the company has all server infrastucture freshly rebuilt and deployed daily.  Slackbot api requests in the script serve basic alerts / logging.  The SQL password generator function used regex to limit the special characters, since some were causing code breakouts.  After all the program and DLL downloads I connect to SQL and create the PasswordResetDatabase, this was for an admin self-service portal for my fellow developers.  The PHP install is then configured by pulling INI files from AWS buckets.  I handled the SQL credentials by "splatting" them in JSON into the $config variable.  Then I continue configuring the IIS install of the github service, by also pulling the certificate for SSL auth from AWS.  Lastly I edit the registry directly a little bit to prevent a bit of the initilization pop-ups.  Anything that can be done in the Windows GUI can be done far faster, cleaner, and regularly with Powershell.  I immensely prefer Powershell over Bash when it comes to doing anything novel or troubleshooting.  Once you know how to dissect the cmdlet help files, and you can picture what objects or data-types are flowing through the pipeline, the unknown becomes do-able as long as the task is clear.  </p>
+			<div class="project-media">
+				<div class="video-container">
+					<iframe src="http://www.youtube.com/embed/xI_qG0DuuMU"></iframe>
+				</div>
+			</div>      
+		</div>
+	</section>
+ </div>
+ 
